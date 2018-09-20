@@ -30,8 +30,13 @@ class PhotoGallery extends React.Component {
         <div className={ styles.photoList }>
           <PhotoList handleClick={this.handleClick} photos={ this.state.photoList } />
         </div>
-        <div className={ styles.mainPhoto }>
-          <MainPhoto curr={ this.state.currentPhoto }/>
+        <div>
+          <div className={ styles.mainPhoto }>
+            <MainPhoto curr={ this.state.currentPhoto }/>
+          </div>
+          <div className={ styles.rollOverText }>
+            Roll over image to zoom in
+          </div>
         </div>
       </div>
     );
