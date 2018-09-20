@@ -28,9 +28,9 @@ class MainPhoto extends React.Component {
   }
 
   setCoordinates (event) {
-    console.log('setting coordinate')
-    var x = event.clientX;
-    var y = event.clientY;
+    // console.log('setting coordinate')
+    var x = event.pageX; // switched this from client to page
+    var y = event.pageY;
     this.setState({
       x: x,
       y: y,
@@ -46,13 +46,16 @@ class MainPhoto extends React.Component {
     var mainFrameLeftMostX;
     var mainFrameRightMostX;
     var mainFrameTopMostY;
- 
+    var offsetTop;
+
     if (this.myRef.current) {
-      mainFrame = this.myRef.current.getBoundingClientRect();
+      offsetTop = this.myRef.current.offsetTop; // this is fixed even after scroll takes place
+      mainFrame = this.myRef.current.getBoundingClientRect(); // this changes after scroll takes place
+      
       mainFrameRightMostX = mainFrame.right;
       mainFrameLeftMostX = mainFrame.left;
-      mainFrameBottomMostY = mainFrame.bottom;
-      mainFrameTopMostY = mainFrame.top;
+      mainFrameBottomMostY = offsetTop + mainFrame.height;
+      mainFrameTopMostY = offsetTop;
       boxDimension = mainFrame.width/2.5; // 2.5 was chosen arbitrarily
     }
     
@@ -69,6 +72,7 @@ class MainPhoto extends React.Component {
     } else {
       styledBlueBox.top = `${this.state.y-boxDimension/2}px`;
     }
+
     // Setting up x bounds for blue box
     if (this.state.x > mainFrameLeftMostX-1 && this.state.x < mainFrameLeftMostX+boxDimension/2) {
       styledBlueBox.left = `${mainFrameLeftMostX}px`;
@@ -99,7 +103,7 @@ class MainPhoto extends React.Component {
 
     return (
       <div className={ styles.mainPhoto }>
-        <div ref={this.myRef} className={ styles.mainFrame } onMouseEnter={ this.openZoom } onMouseLeave={ this.closeZoom } onMouseMove={this.setCoordinates }>
+        <div id="test" ref={this.myRef} className={ styles.mainFrame } onMouseEnter={ this.openZoom } onMouseLeave={ this.closeZoom } onMouseMove={this.setCoordinates }>
           <div className={ styles.blueBox } style={ styledBlueBox }><img src="https://images-na.ssl-images-amazon.com/images/G/01/apparel/rcxgs/tile._CB211431200_.gif"/></div>
           <img src={this.props.curr}/>
         </div>
