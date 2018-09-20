@@ -27,11 +27,13 @@
   box-shadow: 0.85vmin 0.85vmin lightgray;
   position: absolute;
   margin-left: 55vmin;
+  z-index: 200;
 }
 
 :local .zoomFrame > img {
   width: 100%;
   height: auto;
+  z-index: 200;
   /* object-fit: cover; */
 }
 
